@@ -53,37 +53,41 @@ def predict(model, X):
 
 #Train data
 
-path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
-# list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
-list_tr = np.arange(5)
-n_person = 10
-n_pic = 5
-x = 480
-y = 640
-list_train = build_list(path_train,n_person,list_tr)
-X_train = build_data(list_train,n_person, n_pic,x,y)
+# path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
+# # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
+# list_tr = np.arange(5)
+# n_person = 10
+# n_pic = 5
+# x = 480
+# y = 640
+# list_train = build_list(path_train,n_person,list_tr)
+# X_train = build_data(list_train,n_person, n_pic,x,y)
 
-scaler = StandardScaler()
-scaler.fit(X_train)
-X_train_norm = scaler.transform(X_train)
+# scaler = StandardScaler()
+# scaler.fit(X_train)
+# X_train_norm = scaler.transform(X_train)
 
-t1 = time()
-pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
-X_train_pca = pca.transform(X_train_norm)
-
-
-print("Time PCA = %0.3fs"%(time()-t1))
-
-Y_train = lebel(n_person,n_pic)
+# t1 = time()
+# pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
+# X_train_pca = pca.transform(X_train_norm)
 
 
-data =  np.concatenate((Y_train,X_train_pca),axis=1)
-df = pd.DataFrame(data)
-df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/X_train_pca.csv')
+# print("Time PCA = %0.3fs"%(time()-t1))
+
+# Y_train = lebel(n_person,n_pic)
 
 
+# data =  np.concatenate((Y_train,X_train_pca),axis=1)
+# df = pd.DataFrame(data)
+# df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/X_train_pca.csv')
 
-# #Test data
+read_data = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/X_train_pca.csv')
+data = read_data.values
+
+Y_train = data[:,1]
+X_train_pca = np.delete(data,[0,1],1)
+
+#Test data
 
 # path_test='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_te = np.array([5,6,7,8,9])
