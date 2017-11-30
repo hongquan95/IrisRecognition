@@ -50,9 +50,9 @@ def predict(model, X):
 
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
-list_tr = np.arange(7)
+list_tr = np.arange(5)
 n_person = 100
-n_pic = 7
+n_pic = 5
 x = 480
 y = 640
 list_train = build_list(path_train,n_person,list_tr)
@@ -75,8 +75,8 @@ Y_train = lebel(n_person,n_pic)
 #Test data
 
 path_test='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
-list_te = np.array([7,8,9])
-n_pic_test = 3
+list_te = np.array([5,6,7,8,9])
+n_pic_test = 5
 list_test = build_list(path_test,n_person,list_te)
 X_test = build_data(list_test,n_person, n_pic_test,x,y)
 
@@ -88,11 +88,11 @@ Y_test = lebel(n_person,n_pic_test)
 
 
 #num_neuron = np.array([70,75,80,85,90,95,100,105,110,120])
-num_neuron = np.array([500])
+num_neuron = np.array([100])
 t2 = time()
 for i in (num_neuron):
-	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
-	                        learning_rate_init=0.001,tol=1e-6,random_state=1,verbose=False)
+	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='logistic',solver='sgd',
+	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=False)
 	mlp.fit(X_train_pca,Y_train)
 
 	Y_predict = predict(mlp,X_test_pca)
