@@ -21,7 +21,7 @@ def build_list(path,vx,vy):
 	return list_fn
 
 def build_data(list_name, x, y, r,h):
-	raito = 0.5
+	raito = 0.1
 	a = int(r*raito)
 	b = int(h*raito)
 	X_full = np.zeros((x*y,a*b))
@@ -64,7 +64,7 @@ scaler.fit(X_train)
 X_train_norm = scaler.transform(X_train)
 
 t1 = time()
-pca = PCA(n_components =150,svd_solver='full' ).fit(X_train_norm)
+pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
 X_train_pca = pca.transform(X_train_norm)
 
 print("Time PCA = %0.3fs"%(time()-t1))
