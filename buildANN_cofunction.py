@@ -42,13 +42,16 @@ def lebel(nx,ny):
 	for i in range(nx):
 		for j in range(ny):
 			Y[i*ny+j]=i+1
-	return Y.astype(int)
+	Y = Y.astype(int)
+	Y = Y.reshape(nx*ny,1)
+	return Y
 
 
 def predict(model, X):
 
 	return model.predict(X)
 
+#Train data
 
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
@@ -68,11 +71,16 @@ t1 = time()
 pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
 X_train_pca = pca.transform(X_train_norm)
 
-df = pd.DataFrame(X_train_pca),
 
 print("Time PCA = %0.3fs"%(time()-t1))
 
 Y_train = lebel(n_person,n_pic)
+
+
+data =  np.concatenate((Y_train,X_train_pca),axis=1)
+df = pd.DataFrame(data)
+df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/X_train_pca.csv')
+
 
 
 # #Test data
