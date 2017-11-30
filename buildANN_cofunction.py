@@ -51,7 +51,7 @@ def predict(model, X):
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
 list_tr = np.arange(5)
-n_person = 100
+n_person = 500
 n_pic = 5
 x = 480
 y = 640
