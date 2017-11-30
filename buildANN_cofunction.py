@@ -24,7 +24,7 @@ def build_data(list_name, x, y, r,h):
 	X_full = np.zeros((x*y,r*h))
 	for i in range(len(list_name)):
 		gray=np.array( Image.open(list_name[i]))
-		im_vec = gray.reshape(1,480*680) #can than kich thuoc reshape
+		im_vec = gray.reshape(1,480*640) #can than kich thuoc reshape
 		X_full[i, :] = im_vec
 	return X_full
 def lebel(nx,ny):
@@ -43,7 +43,7 @@ def predict(model, X):
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
 list_tr = np.arange(10)
-n_person = 1000
+n_person = 10
 n_pic = 10
 x = 480
 y = 640
