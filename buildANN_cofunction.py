@@ -1,5 +1,7 @@
 
 from time import time
+
+import pandas as pd
 import numpy as np
 #import cv2
 from PIL import Image
@@ -51,13 +53,12 @@ def predict(model, X):
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
 list_tr = np.arange(5)
-n_person = 1000
+n_person = 10
 n_pic = 5
 x = 480
 y = 640
 list_train = build_list(path_train,n_person,list_tr)
 X_train = build_data(list_train,n_person, n_pic,x,y)
-
 
 scaler = StandardScaler()
 scaler.fit(X_train)
@@ -67,43 +68,45 @@ t1 = time()
 pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
 X_train_pca = pca.transform(X_train_norm)
 
+df = pd.DataFrame(X_train_pca),
+
 print("Time PCA = %0.3fs"%(time()-t1))
 
 Y_train = lebel(n_person,n_pic)
 
 
-#Test data
+# #Test data
 
-path_test='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
-list_te = np.array([5,6,7,8,9])
-n_pic_test = 5
-list_test = build_list(path_test,n_person,list_te)
-X_test = build_data(list_test,n_person, n_pic_test,x,y)
+# path_test='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
+# list_te = np.array([5,6,7,8,9])
+# n_pic_test = 5
+# list_test = build_list(path_test,n_person,list_te)
+# X_test = build_data(list_test,n_person, n_pic_test,x,y)
 
-X_test_norm = scaler.transform(X_test)
-X_test_pca = pca.transform(X_test_norm)
+# X_test_norm = scaler.transform(X_test)
+# X_test_pca = pca.transform(X_test_norm)
 
-Y_test = lebel(n_person,n_pic_test)
+# Y_test = lebel(n_person,n_pic_test)
 
 
 
-#num_neuron = np.array([70,75,80,85,90,95,100,105,110,120])
-num_neuron = np.array([100])
-t2 = time()
-for i in (num_neuron):
-	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='logistic',solver='sgd',
-	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=False)
-	mlp.fit(X_train_pca,Y_train)
+# #num_neuron = np.array([70,75,80,85,90,95,100,105,110,120])
+# num_neuron = np.array([100])
+# t2 = time()
+# for i in (num_neuron):
+# 	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='logistic',solver='sgd',
+# 	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=False)
+# 	mlp.fit(X_train_pca,Y_train)
 
-	Y_predict = predict(mlp,X_test_pca)
-	print("Loss of %d Neuron of Hidden Layer: %0.6f"%(i,mlp.loss_))
-	print("Score of %d Neuron of Hidden Layer: %d"%(i,accuracy_score(Y_test, Y_predict, normalize=False)))
-	from sklearn.metrics import classification_report
-	print("Neuron %d"%i)
-	print(classification_report(Y_test, Y_predict))
+# 	Y_predict = predict(mlp,X_test_pca)
+# 	print("Loss of %d Neuron of Hidden Layer: %0.6f"%(i,mlp.loss_))
+# 	print("Score of %d Neuron of Hidden Layer: %d"%(i,accuracy_score(Y_test, Y_predict, normalize=False)))
+# 	from sklearn.metrics import classification_report
+# 	print("Neuron %d"%i)
+# 	print(classification_report(Y_test, Y_predict))
 
-# 65 la ra loss tot nhat
-print("Time train NN = %0.3fs"%(time()-t2))
+# # 65 la ra loss tot nhat
+# print("Time train NN = %0.3fs"%(time()-t2))
 
 
 
