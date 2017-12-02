@@ -47,7 +47,7 @@ def lebel(nx,ny):
 	return Y
 
 
-#Train data
+#1.Train data
 
 path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
@@ -72,14 +72,14 @@ print("Time PCA = %0.3fs"%(time()-t1))
 
 Y_train = lebel(n_person,n_pic)
 
-
+#2.Save Train Data to CSV
 data =  np.concatenate((Y_train,X_train_pca),axis=1)
 df = pd.DataFrame(data)
 df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 
 
 
-#Test data
+#3.Test data
 
 path_test='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 list_te = np.array([5,6,7,8,9])
@@ -89,9 +89,9 @@ X_test = build_data(list_test,n_person, n_pic_test,x,y)
 
 X_test_norm = scaler.transform(X_test)
 X_test_pca = pca.transform(X_test_norm)
-
 Y_test = lebel(n_person,n_pic_test)
 
+#4.Save Test Data to CSV
 data2 =  np.concatenate((Y_test,X_test_pca),axis=1)
 df2 = pd.DataFrame(data2)
 df2.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Test_data.csv')

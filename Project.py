@@ -8,14 +8,14 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
 t1 =time()
-#Doc Data_train
+#1.Read Train Data from CSV
 read_data = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 data = read_data.values
 
 Y_train = data[:,1]
 X_train_pca = np.delete(data,[0,1],1)
 
-#Doc Data_test
+#Read Test Data from CSV
 read_data2 = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Test_data.csv')
 data2 = read_data2.values
 
@@ -28,6 +28,7 @@ def predict(model, X):
 	return model.predict(X)
 
 
+#3. Build Model
 num_neuron = np.array([20,25])
 
 t2 = time()
@@ -44,7 +45,7 @@ for i in (num_neuron):
 	print("Neuron %d"%i)
 	print(precision_recall_fscore_support(Y_test, Y_predict, average = 'weighted'))
 
-# 65 la ra loss tot nhat
+
 print("Time train NN = %0.3fs"%(time()-t2))
 
 
