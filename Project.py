@@ -33,7 +33,7 @@ num_neuron = np.array([20,25])
 
 t2 = time()
 for i in (num_neuron):
-	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=400,activation='relu',solver='sgd',
+	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
 	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=False)
 	mlp.fit(X_train_pca,Y_train)
 
