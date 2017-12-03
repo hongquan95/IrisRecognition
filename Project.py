@@ -19,7 +19,7 @@ X_train_pca = np.delete(data,[0,1],1)
 read_data2 = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Test_data.csv')
 data2 = read_data2.values
 
-Y_test = data[:,1]
+Y_test = data2[:,1]
 X_test_pca = np.delete(data2,[0,1],1)
 
 print("time chuan bi data: %0.3f"%(time()-t1))
