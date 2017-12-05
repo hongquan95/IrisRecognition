@@ -29,7 +29,7 @@ def predict(model, X):
 
 
 #3. Build Model
-num_neuron = np.array([20,25])
+num_neuron = np.array([40,41,42,43,44,45,46,47,48,49])
 
 t2 = time()
 for i in (num_neuron):
@@ -39,7 +39,7 @@ for i in (num_neuron):
 
 	Y_predict = predict(mlp,X_test_pca)
 	print("Loss of %d Neuron of Hidden Layer: %0.6f"%(i,mlp.loss_))
-	print("Score of %d Neuron of Hidden Layer: %d"%(i,accuracy_score(Y_test, Y_predict, normalize=False)))
+	print("Score of %d Neuron of Hidden Layer: %d/%d"%(i,accuracy_score(Y_test, Y_predict, normalize=False),len(Y_test)))
 	#from sklearn.metrics import classification_report
 	from sklearn.metrics import precision_recall_fscore_support
 	print("Neuron %d"%i)
