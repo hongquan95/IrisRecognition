@@ -11,6 +11,7 @@ t1 =time()
 #1.Read Train Data from CSV
 read_data = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 data = read_data.values
+np.random.shuffle(data) ########################3
 
 Y_train = data[:,1]
 X_train_pca = np.delete(data,[0,1],1)
@@ -18,6 +19,7 @@ X_train_pca = np.delete(data,[0,1],1)
 #Read Test Data from CSV
 read_data2 = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Test_data.csv')
 data2 = read_data2.values
+np.random.shuffle(data2)#######################
 
 Y_test = data2[:,1]
 X_test_pca = np.delete(data2,[0,1],1)
@@ -29,12 +31,12 @@ def predict(model, X):
 
 
 #3. Build Model
-num_neuron = np.array([20,30,40,50,60,70,80])
+num_neuron = np.array([20])
 
 t2 = time()
 for i in (num_neuron):
 	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
-	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=False)
+	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=True)
 	mlp.fit(X_train_pca,Y_train)
 
 	Y_predict = predict(mlp,X_test_pca)
