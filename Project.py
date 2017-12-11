@@ -19,7 +19,7 @@ X_train_pca = np.delete(data,[0,1],1)
 #Read Test Data from CSV
 read_data2 = pd.read_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Test_data.csv')
 data2 = read_data2.values
-np.random.shuffle(data2)#######################
+
 
 Y_test = data2[:,1]
 X_test_pca = np.delete(data2,[0,1],1)
@@ -32,7 +32,7 @@ def predict(model, X):
 
 #3. Build Model
 
-num_neuron = np.array([50])
+num_neuron = np.array([20,30,40])
 
 
 t2 = time()

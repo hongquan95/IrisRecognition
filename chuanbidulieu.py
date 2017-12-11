@@ -55,9 +55,9 @@ path_train='/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
 
 
 
-list_tr = np.array([0,1,2,3,4]);
+list_tr = np.array([0,1]);
 n_person = 500
-n_pic = 5
+n_pic = 2
 
 
 x = 480
@@ -70,7 +70,7 @@ scaler.fit(X_train)
 X_train_norm = scaler.transform(X_train)
 
 t1 = time()
-pca = PCA(n_components =100,svd_solver='full' ).fit(X_train_norm)
+pca = PCA(n_components =0.99,svd_solver='full' ).fit(X_train_norm)
 X_train_pca = pca.transform(X_train_norm)
 
 
@@ -89,8 +89,8 @@ df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 
 
 path_test = '/media/top/TOP G/database1/IRIS/CASIA-Iris-Syn/'
-list_te = np.array([5,6,7,8,9])
-n_pic_test = 5
+list_te = np.array([5,6,7,8,9,2,3,4])
+n_pic_test = 8
 
 
 list_test = build_list(path_test,n_person,list_te)
