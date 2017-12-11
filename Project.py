@@ -31,25 +31,14 @@ def predict(model, X):
 
 
 #3. Build Model
-<<<<<<< HEAD
 
-num_neuron = np.array([20])
-
-
-t2 = time()
-for i in (num_neuron):
-	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
-
-	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=True)
-
-=======
 num_neuron = np.array([20])
 
 t2 = time()
 for i in (num_neuron):
 	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
 	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=True)
->>>>>>> newdata
+
 	mlp.fit(X_train_pca,Y_train)
 
 	Y_predict = predict(mlp,X_test_pca)
@@ -63,11 +52,6 @@ for i in (num_neuron):
 
 print("Time train NN = %0.3fs"%(time()-t2))
 
-<<<<<<< HEAD
-#
-=======
-
->>>>>>> newdata
 
 
 

@@ -51,21 +51,12 @@ def lebel(nx,ny):
 
 path_train='/media/top/TOP G/database1/IRIS/PHONG/'
 # list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
-<<<<<<< HEAD
 
-list_all = np.arange(1,11)
-np.random.shuffle(list_all)
-list_tr = list_all[0:2]
 
-print(list_tr[0:2])
-
-n_person = 49
-n_pic = 2
-=======
 list_tr = np.array([1,2,3,4,7]);
 n_person = 49
 n_pic = 5
->>>>>>> newdata
+
 x = 60
 y = 440
 list_train = build_list(path_train,n_person,list_tr)
@@ -93,15 +84,11 @@ df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 
 #3.Test data
 
-<<<<<<< HEAD
-path_test='/media/top/TOP G/database1/IRIS/PHONG/'    
-list_te = list_all[2:10]
-n_pic_test = 8
-=======
+
 path_test='/media/top/TOP G/database1/IRIS/PHONG/'
 list_te = np.array([5,6])
 n_pic_test = 2
->>>>>>> newdata
+
 list_test = build_list(path_test,n_person,list_te)
 X_test = build_data(list_test,n_person, n_pic_test,x,y)
 
