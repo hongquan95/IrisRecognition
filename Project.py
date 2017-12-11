@@ -34,6 +34,7 @@ def predict(model, X):
 
 num_neuron = np.array([20])
 
+
 t2 = time()
 for i in (num_neuron):
 	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
@@ -52,7 +53,7 @@ for i in (num_neuron):
 
 print("Time train NN = %0.3fs"%(time()-t2))
 
-
+#
 
 
 

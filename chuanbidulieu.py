@@ -50,12 +50,13 @@ def lebel(nx,ny):
 #1.Train data
 
 path_train='/media/top/TOP G/database1/IRIS/PHONG/'
-# list_tr = [".centerlight",".glasses",".happy",".leftlight",".normal",".rightlight",".sad",".sleepy",".surprised",".wink"]
+
 
 
 list_tr = np.array([1,2,3,4,7]);
 n_person = 49
 n_pic = 5
+
 
 x = 60
 y = 440
@@ -88,6 +89,7 @@ df.to_csv('/media/top/TOP G/PROJECT_2/IrisProject/file/Train_data.csv')
 path_test='/media/top/TOP G/database1/IRIS/PHONG/'
 list_te = np.array([5,6])
 n_pic_test = 2
+
 
 list_test = build_list(path_test,n_person,list_te)
 X_test = build_data(list_test,n_person, n_pic_test,x,y)
