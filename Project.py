@@ -32,13 +32,13 @@ def predict(model, X):
 
 #3. Build Model
 
-num_neuron = np.array([20])
+num_neuron = np.array([50])
 
 
 t2 = time()
 for i in (num_neuron):
 	mlp = MLPClassifier(hidden_layer_sizes=(i,),max_iter=500,activation='relu',solver='sgd',
-	                        learning_rate_init=0.001,tol=1e-4,random_state=1,verbose=True)
+	                        learning_rate_init=0.01,tol=1e-4,random_state=1,verbose=False)
 
 	mlp.fit(X_train_pca,Y_train)
 
