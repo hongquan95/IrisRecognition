@@ -32,7 +32,7 @@ def predict(model, X):
 
 #3. Build Model
 
-num_neuron = np.array([20,30,40])
+num_neuron = np.array([40, 60, 80, 100, 120])
 
 
 t2 = time()
