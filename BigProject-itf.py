@@ -64,10 +64,10 @@ def Train_data(path_train):
 	
 	
 	
-	list_train = build_list(path_train,n_person,list_tr)
+	list_trainain = build_list(path_train,NumPerson,list_train)
 
 
-	X_train,a,b = build_data(list_train,n_person, n_pic,x,y)
+	X_train,a,b = build_data(list_trainain,NumPerson, NumPicTrain,x,y)
 
 	scaler = StandardScaler()
 	scaler.fit(X_train)
@@ -76,7 +76,7 @@ def Train_data(path_train):
 	
 
 
-	Y_train = lebel(n_person,n_pic)
+	Y_train = lebel(NumPerson,NumPicTrain)
 
 	return X_train_norm, Y_train, scaler
 
@@ -90,24 +90,24 @@ def Save_data_train(X_train_norm, Y_train):
 	df.to_csv('file/Train_data.csv')
 
 
-##3.Phan validation
-def Test(path_test,scaler):
+# ##3.Phan validation
+# def Test(path_test,scaler):
 	
 	
-	list_test = build_list(path_test,n_person,list_te)
-	X_test,_,_ = build_data(list_test,n_person, n_pic_test,x,y)
+# 	list_test = build_list(path_test,NumPerson,list_te)
+# 	X_test,_,_ = build_data(list_test,NumPerson, NumPicTest,x,y)
 
-	X_test_norm = scaler.transform(X_test)
+# 	X_test_norm = scaler.transform(X_test)
 	
-	Y_test = lebel(n_person,n_pic_test)
-	return X_test_norm, Y_test
+# 	Y_test = lebel(NumPerson,NumPicTest)
+# 	return X_test_norm, Y_test
 
-def Save_data_test(X_test_norm, Y_test):
+# def Save_data_test(X_test_norm, Y_test):
 
-#2.Save Test Data to CSV
-	data2 =  np.concatenate((Y_test,X_test_norm),axis=1)
-	df2 = pd.DataFrame(data2)
-	df2.to_csv('file/Test_data.csv')
+# #2.Save Test Data to CSV
+# 	data2 =  np.concatenate((Y_test,X_test_norm),axis=1)
+# 	df2 = pd.DataFrame(data2)
+# 	df2.to_csv('file/Test_data.csv')
 
 
 
@@ -137,8 +137,9 @@ from sklearn.metrics import accuracy_score
 
 
 def predict(model, X):
+	predicta = model.predict(X)
 
-	return model.predict(X)
+	return predicta
 
 def Train_Model(num_neuron, max_iter, activation, learning_rate, epsilon):
 
@@ -150,15 +151,15 @@ def Train_Model(num_neuron, max_iter, activation, learning_rate, epsilon):
 	# np.random.shuffle(data) ########################3
 
 	Y_train = data[:,1]
-	X_train_norm = np.delete(data,[0,1],1)
+	X_train_norm = data[:,1:-1] #Fucking sai chi so
 
 	#Read Test Data from CSV
-	read_data2 = pd.read_csv('file/Test_data.csv')
-	data2 = read_data2.values
-	# np.random.shuffle(data2)#######################
+	# read_data2 = pd.read_csv('file/Test_data.csv')
+	# data2 = read_data2.values
+	# # np.random.shuffle(data2)#######################
 
-	Y_test = data2[:,1]
-	X_test_norm = np.delete(data2,[0,1],1)
+	# Y_test = data2[:,1]
+	# X_test_norm = data2[:,2:-1]
 
 	
 
@@ -171,18 +172,19 @@ def Train_Model(num_neuron, max_iter, activation, learning_rate, epsilon):
 	mlp = MLPClassifier(hidden_layer_sizes=(num_neuron,),max_iter=max_iter,activation=activation,solver='sgd',
 	                        learning_rate_init=learning_rate,tol=epsilon,random_state=1,verbose=False)
 	mlp.fit(X_train_norm,Y_train)
-
-	Y_predict = predict(mlp,X_test_norm)
 	print("Loss of %d Neuron of Hidden Layer: %0.6f"%(num_neuron,mlp.loss_))
-	print("Score of %d Neuron of Hidden Layer: %d/%d"%(num_neuron,accuracy_score(Y_test, Y_predict, normalize=False),len(Y_test)))
-	#from sklearn.metrics import classification_report
-	from sklearn.metrics import precision_recall_fscore_support
-	print("Neuron %d"%num_neuron)
-	print(precision_recall_fscore_support(Y_test, Y_predict, average = 'weighted'))
-	print(accuracy_score(Y_test, Y_predict))
 
-	#
-	return mlp.loss_, accuracy_score(Y_test, Y_predict, normalize=False), mlp
+	# Y_predict = predict(mlp,X_test_norm)
+	
+	# print("Score of %d Neuron of Hidden Layer: %d/%d"%(num_neuron,accuracy_score(Y_test, Y_predict, normalize=False),len(Y_test)))
+	# #from sklearn.metrics import classification_report
+	# from sklearn.metrics import precision_recall_fscore_support
+	# print("Neuron %d"%num_neuron)
+	# print(precision_recall_fscore_support(Y_test, Y_predict, average = 'weighted'))
+	# print(accuracy_score(Y_test, Y_predict))
+
+	#accuracy_score(Y_test, Y_predict, normalize=False)
+	return mlp.loss_, mlp
 
 
 
@@ -194,11 +196,11 @@ D = 440*60 # original dimension #kich thuoc
 d = 500 # new dimension 
 ProjectionMatrix = np.random.randn(D, d) 
 
-n_person = 49
-n_pic = 4
-n_pic_test = 3
-list_tr = np.arange(1,5);
-list_te = np.arange(5,8)
+NumPerson = 49
+NumPicTrain = 4
+NumPicTest = 0
+list_train = np.arange(1,5)
+list_te = np.arange(0)
 
 
 x = 60
@@ -212,11 +214,13 @@ def full(value,a,b,c,d,e):
 	if value == 1:
 		path_test = a
 		X_train_norm, Y_train, scaler  = Train_data(a)   ################  Choice Data
-		X_test_norm, Y_test = Test(path_test, scaler)		
-		Save_data_test(X_test_norm, Y_test)
-		return  X_train_norm,Y_train, scaler, X_test_norm,Y_test		###FFFFFFFFFFFFFF
+		# X_test_norm, Y_test = Test(path_test, scaler)		
+		# Save_data_test(X_test_norm, Y_test)
+		print("Full 1 Done!")
+		return  X_train_norm,Y_train, scaler  #, X_test_norm,Y_test		
 
 	if value == 2:
+		print("Full 2 Done!")
 		return Save_data_train(X_train_norm = a, Y_train = b)										###############  Save Data
 
 	
@@ -225,6 +229,7 @@ def full(value,a,b,c,d,e):
 
 	if value == 3:
 		X_test_final_norm = test_final(path=a,scaler=b)  #########Choice image test
+		print("Full 3 Done!")
 		return X_test_final_norm
 
 
@@ -232,20 +237,24 @@ def full(value,a,b,c,d,e):
 
 	#Train_Model(num_neuron, max_iter, activation, learning_rate, epsilon):
 	if value == 4:
-		Cost_function, Acuracy, Mlp=Train_Model(num_neuron =a, max_iter=b, activation =c,learning_rate= d,epsilon= e) #####NutTrainData
+		Cost_function, Mlp=Train_Model(num_neuron =a, max_iter=b, activation =c,learning_rate= d,epsilon= e) #####NutTrainData
+		print("Full 4 Done!")
 
-		return Cost_function, Acuracy, Mlp
+		return Cost_function, Mlp
 
 	if value == 5:
 		Y_predict_final = predict(a, b)		####Nut indentify	
+		
+
 		#Nhap threshold
-		#threshold = 50;
+		
 
 		if kt(y=Y_predict_final,X_train_norm=d,X_test_final_norm =b,threshold= c) == True:
 			result = True
 		else:
 			result = False
 
+		print("Full 5 Done!")
 
 		return Y_predict_final,result 		####Nut indentify
 
@@ -261,7 +270,7 @@ def kt(y ,X_train_norm, X_test_final_norm, threshold):
 		distance[i] = np.sqrt( ((x2 - x1)**2).sum() )
 
 
-	
+
 
 	for j in range(4):
 		print(distance[j])
@@ -273,66 +282,22 @@ def kt(y ,X_train_norm, X_test_final_norm, threshold):
 ####################MAIN#######################
 if __name__ == '__main__':
 		
+	#Chon du lieu	
 	path_train='/media/top/TOP G/database1/IRIS/PHONG/'
 
-	X_train_norm, Y_train, scaler,Xt,Yt = full(1,path_train,None, None, None, None)
+	X_train_norm, Y_train, scaler = full(1,path_train,None, None, None, None)
 
 	full(2,X_train_norm,Y_train,None,None, None)
 
-	path_test_final = '/media/top/TOP G/database1/IRIS/PHONG/18_7.jpg'
+	path_test_final = '/media/top/TOP G/database1/IRIS/PHONG/1_7.jpg'
 
 
 	X_test_final_norm = full(3,path_test_final,scaler,None, None, None)
 
-	Cost_function, Acuracy, Mlp = full(4,160,2000,'relu',0.01,1e-6)
-
+	Cost_function, Mlp = full(4,160,400,'relu',0.01,1e-4)
 	# #Truyen threshold
-	# threshold = 50;
+	threshold = 50;
 
-	# Y_predict_final, result = full(5,Mlp, X_test_final_norm, threshold, X_train_norm, None)
+	Y_predict_final, result = full(5,Mlp, X_test_final_norm, threshold, X_train_norm, None)
 
-	# print(Y_predict, result)
-
-
-
-
-
-	
-
-	# #Nhap threshold
-	# threshold = 50;
-
-	# if kt(Y_predict_final, X_train_norm,X_test_final_norm, threshold) == True:
-	# 	print(Y_predict_final)
-	# else:
-	# 	print("False")
-
-
-
-
-
-
-# Cost_function, Acuracy, Mlp=Train_Model(num_neuron =40, max_iter=500, activation ='relu',learning_rate= 0.001,epsilon= 1e-4) #####NutTrainData
-
-# Cost_function, Acuracy, Mlp = full(4, None, None)
-
-# Y_predict_final = full(5,Mlp, X_test_final_pca)
-
-
-################TInh THREHSHOLD
-
-#a = X_train_norm[0,:]
-#for i in range(169):
-#    b = X_train_norm[i,:]
-#    print(np.sqrt(((b-a)**2).sum))
-
-
-
-
-
-            
-
-
-
-
-
+	print(Y_predict_final, result)
